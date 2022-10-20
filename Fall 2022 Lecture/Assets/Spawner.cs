@@ -23,7 +23,7 @@ public class Spawner : MonoBehaviour
     {
         int xMin = -10 ;
         int xMax = 16;
-        int yMin = -3;
+        int yMin = -2;
         int yMax = 2;
 
         for (int i = 0; i < NUM_COINS; i++)
