@@ -17,7 +17,7 @@ public class Scorekeeper : MonoBehaviour
     {
         level = SceneManager.GetActiveScene().buildIndex;
         scoreText.text = "Score: " + score;
-        sceneText.text = "Level " + (level + 1);
+        sceneText.text = "Level " + (level - 1);
     }
 
     // Update is called once per frame
