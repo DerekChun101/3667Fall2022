@@ -6,18 +6,21 @@ using UnityEngine;
 
 public class Scorekeeper : MonoBehaviour
 {
-    [SerializeField] int score = 0;
+    [SerializeField] int score;
     [SerializeField] Text scoreText;
     [SerializeField] Text sceneText;
     const int DEFAULT_POINTS = 1;
     const int SCORE_TO_ADVANCE = 10;
     int level;
+    string playerName;
     // Start is called before the first frame update
     void Start()
     {
-        level = SceneManager.GetActiveScene().buildIndex;
-        scoreText.text = "Score: " + score;
-        sceneText.text = "Level " + (level - 1);
+        score = PersistentData.Instance.GetScore();
+        playerName = PersistentData.Instance.GetName();
+        level = SceneManager.GetActiveScene().buildIndex - 1;
+        DisplayScore();
+        sceneText.text = "Level " + (level);
     }
 
     // Update is called once per frame
@@ -28,8 +31,9 @@ public class Scorekeeper : MonoBehaviour
     public void AddPoints(int pointsToAdd)
     {
         score += pointsToAdd;
-        scoreText.text = "Score: " + score;
-        if (score >= SCORE_TO_ADVANCE)
+        PersistentData.Instance.SetScore(score);
+        DisplayScore();
+        if (score >= (level) * SCORE_TO_ADVANCE)
         {
             //move to the next level
             AdvanceLevel();
@@ -43,6 +47,11 @@ public class Scorekeeper : MonoBehaviour
 
     public void AdvanceLevel()
     {
-        SceneManager.LoadScene(level + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void DisplayScore()
+    {
+        scoreText.text = "Welcome " + playerName + " Score: " + score;
     }
 }
